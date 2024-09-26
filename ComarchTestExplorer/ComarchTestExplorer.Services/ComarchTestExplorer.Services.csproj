@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ComarchTestExplorer.Data\ComarchTestExplorer.Data.csproj" />
+  </ItemGroup>
+
 </Project>
