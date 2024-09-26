@@ -13,13 +13,13 @@ public class InvoiceRepository
 
     public InvoiceRepository()
     {
-        Data = [
+        Data = new List<Invoice> {
             new Invoice{
                 BuyerName = "Buyer1",
                 Id = 1,
                 IssueDate = new DateTime(2024,09,02),
                 Number = "2024/09-1",
-                Items = [
+                Items = new List<InvoiceItem>{
                     new() {
                         GrossValue = 100,
                         Id = 1,
@@ -36,8 +36,8 @@ public class InvoiceRepository
                         Quantity = 1,
                         Tax = 40
                     }
-                ],
+                },
             }
-            ];
+            };
     }
 }
