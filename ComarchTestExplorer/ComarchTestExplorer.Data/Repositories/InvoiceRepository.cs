@@ -2,7 +2,15 @@
 
 namespace ComarchTestExplorer.Data.Repositories;
 
-public class InvoiceRepository
+public interface IInvoiceRepository
+{
+    IList<Invoice> Data { get; set; }
+
+    IEnumerable<Invoice> GetAll();
+    //public void Add(Invoice invoice);
+}
+
+public class InvoiceRepository : IInvoiceRepository
 {
     public IList<Invoice> Data { get; set; }
 

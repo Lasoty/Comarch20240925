@@ -1,11 +1,16 @@
 ﻿namespace ComarchTestExplorer.Data.Repositories;
 
-public class CompanyRepository
+public interface ICompanyRepository
+{
+    string GetCompany();
+}
+
+public class CompanyRepository : ICompanyRepository
 {
     string company = "Comarch Szkolenia";
 
-    public CompanyRepository() 
-    { 
+    public CompanyRepository()
+    {
     }
 
     public string GetCompany()

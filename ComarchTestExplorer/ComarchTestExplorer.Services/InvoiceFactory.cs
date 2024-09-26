@@ -11,15 +11,20 @@ namespace ComarchTestExplorer.Services;
 
 public class InvoiceFactory : IInvoiceFactory
 {
-    private readonly CompanyRepository companyRepository;
-    private readonly InvoiceRepository invoiceRepository;
+    private readonly ICompanyRepository companyRepository;
+    private readonly IInvoiceRepository invoiceRepository;
+    private readonly IDiscountService discountService;
 
     public event EventHandler<Invoice> InvoiceCreated;
 
-    public InvoiceFactory(CompanyRepository companyRepository, InvoiceRepository invoiceRepository)
+    public InvoiceFactory(
+        ICompanyRepository companyRepository,
+        IInvoiceRepository invoiceRepository,
+        IDiscountService discountService)
     {
         this.companyRepository = companyRepository;
         this.invoiceRepository = invoiceRepository;
+        this.discountService = discountService;
     }
 
     public Invoice CreateInvoice(IEnumerable<InvoiceItem> items, string buyerName)
@@ -33,7 +38,8 @@ public class InvoiceFactory : IInvoiceFactory
         {
             throw new ArgumentException("Buyer name cannot be null or empty");
         }
-
+        var totalAmount = items.Sum(i => i.GrossValue * i.Quantity);
+        //var discount = discountService.CalculateDiscount(totalAmount, "Customer");
         Invoice invoice = new()
         {
             Id = invoiceRepository.Data.Last().Id + 1,
@@ -41,11 +47,12 @@ public class InvoiceFactory : IInvoiceFactory
             IssueDate = DateTime.Now,
             Number = $"{DateTime.Now.Year}/{DateTime.Now.Month}-{invoiceRepository.Data.Count + 1}",
             Items = items.ToList(),
-            TotalAmount = items.Sum(i => i.GrossValue * i.Quantity),
+            TotalAmount = totalAmount - discountService.CalculateDiscount(totalAmount, "Customer"),
             SuplierName = companyRepository.GetCompany()
         };
         
         InvoiceCreated?.Invoke(this, invoice);
+        //invoiceRepository.Add(invoice);
         return invoice;
     }
 }
