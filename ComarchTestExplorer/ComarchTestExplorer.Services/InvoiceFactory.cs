@@ -14,6 +14,8 @@ public class InvoiceFactory : IInvoiceFactory
     private readonly CompanyRepository companyRepository;
     private readonly InvoiceRepository repository;
 
+    public event EventHandler<Invoice> InvoiceCreated;
+
     public InvoiceFactory(CompanyRepository companyRepository, InvoiceRepository repository)
     {
         this.companyRepository = companyRepository;
@@ -23,5 +25,7 @@ public class InvoiceFactory : IInvoiceFactory
     public Invoice CreateInvoice(IEnumerable<InvoiceItem> items, string buyerName)
     {
         throw new NotImplementedException();
+
+        //InvoiceCreated?.Invoke(this, invoice);
     }
 }

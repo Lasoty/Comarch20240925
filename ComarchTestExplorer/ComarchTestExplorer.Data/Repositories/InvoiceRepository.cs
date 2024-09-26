@@ -40,4 +40,10 @@ public class InvoiceRepository
             }
             };
     }
+
+
+    public IEnumerable<Invoice> GetAll()
+    {
+        return Data;
+    }
 }
