@@ -12,20 +12,40 @@ namespace ComarchTestExplorer.Services;
 public class InvoiceFactory : IInvoiceFactory
 {
     private readonly CompanyRepository companyRepository;
-    private readonly InvoiceRepository repository;
+    private readonly InvoiceRepository invoiceRepository;
 
     public event EventHandler<Invoice> InvoiceCreated;
 
-    public InvoiceFactory(CompanyRepository companyRepository, InvoiceRepository repository)
+    public InvoiceFactory(CompanyRepository companyRepository, InvoiceRepository invoiceRepository)
     {
         this.companyRepository = companyRepository;
-        this.repository = repository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     public Invoice CreateInvoice(IEnumerable<InvoiceItem> items, string buyerName)
     {
-        throw new NotImplementedException();
+        if (items == null || !items.Any())
+        {
+            throw new ArgumentException("Items cannot be null or empty");
+        }
 
-        //InvoiceCreated?.Invoke(this, invoice);
+        if (string.IsNullOrEmpty(buyerName))
+        {
+            throw new ArgumentException("Buyer name cannot be null or empty");
+        }
+
+        Invoice invoice = new()
+        {
+            Id = invoiceRepository.Data.Last().Id + 1,
+            BuyerName = buyerName,
+            IssueDate = DateTime.Now,
+            Number = $"{DateTime.Now.Year}/{DateTime.Now.Month}-{invoiceRepository.Data.Count + 1}",
+            Items = items.ToList(),
+            TotalAmount = items.Sum(i => i.GrossValue * i.Quantity),
+            SuplierName = companyRepository.GetCompany()
+        };
+        
+        InvoiceCreated?.Invoke(this, invoice);
+        return invoice;
     }
 }

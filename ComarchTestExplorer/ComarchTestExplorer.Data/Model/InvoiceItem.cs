@@ -8,7 +8,7 @@
 
         public decimal Tax { get; set; }
 
-        public decimal GrossValue { get; set; }
+        public decimal GrossValue => NetValue * (1 + Tax);
 
         public int Quantity { get; set; }
 
