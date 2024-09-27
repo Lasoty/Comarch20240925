@@ -18,6 +18,7 @@ public class HerokuappTests
     {
         new WebDriverManager.DriverManager().SetUpDriver(new WebDriverManager.DriverConfigs.Impl.ChromeConfig());
         driver = new ChromeDriver();
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
     }
 
     [TearDown]
@@ -128,6 +129,50 @@ public class HerokuappTests
     }
 
 
+    [Test]
+    public void TestDynamicLoading()
+    {
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/dynamic_loading/1");
 
+        var startBtn = driver.FindElement(By.XPath("//*[@id=\"start\"]/button"));
+        startBtn.Click();
+
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+        var loadedElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("finish")));
+        Assert.That(loadedElement.Text, Does.Contain("Hello World!"));
+    }
+
+    [Test]
+    public void TestDynamicLoadingWhenNotExists()
+    {
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/dynamic_loading/2");
+
+        var startBtn = driver.FindElement(By.XPath("//*[@id=\"start\"]/button"));
+        startBtn.Click();
+
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+        var loadedElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(By.Id("finish")));
+        Assert.That(loadedElement.Text, Does.Contain("Hello World!"));
+    }
+
+    [Test]
+    public void FileUploadTest()
+    {
+        FileInfo fileInfo = new FileInfo(Path.Combine("Assets", "UploadFileTest.txt"));
+        Assert.That(fileInfo.Exists, Is.True, "Brakuje pliku testowego.");
+
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/upload");
+        var fileInput = driver.FindElement(By.Id("file-upload"));
+        fileInput.SendKeys(fileInfo.FullName);
+
+        var uploadBtn = driver.FindElement(By.Id("file-submit"));
+        uploadBtn.Click();
+
+        var resultInfo = driver.FindElement(By.Id("uploaded-files"));
+
+        Assert.That(resultInfo.Text, Does.Contain(fileInfo.Name));
+    }
 
 }
