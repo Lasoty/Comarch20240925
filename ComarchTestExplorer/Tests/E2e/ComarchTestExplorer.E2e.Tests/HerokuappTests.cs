@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,25 @@ public class HerokuappTests
     [SetUp]
     public void Setup()
     {
+        var option = new ChromeOptions();
+        option.AddUserProfilePreference("download.default_directory", Path.Combine(Environment.CurrentDirectory, "Downloads"));
+        option.AddUserProfilePreference("download.prompt_for_download", false);
+        option.AddUserProfilePreference("download.directory_upgrade", true);
+        option.AddUserProfilePreference("safebrowsing.enabled", true);
+
+        //option.AddArgument("--start-maximized");
+        option.AddArgument("headless=new");
+        option.AddArgument("--window-size=1920,1050");
+        option.AddArgument("--disable-gpu");
+        option.AddArgument("--incognito");
+        option.AddArgument("--disable-extensions");
+        option.AddArgument("--ignore-certificate-errors");
+        option.AddArgument("--disable-popup-blocking"); //!
+        option.AddArgument("--lang=en-US");
+        option.AddArgument("--allow-insecure-localhost");
+
         new WebDriverManager.DriverManager().SetUpDriver(new WebDriverManager.DriverConfigs.Impl.ChromeConfig());
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(option);
         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
     }
 
@@ -175,4 +193,37 @@ public class HerokuappTests
         Assert.That(resultInfo.Text, Does.Contain(fileInfo.Name));
     }
 
+    [Test]
+    public void FileDownloadTest()
+    {
+        string fileName = "test.txt";
+        var dir = PrepareFolder();
+
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/download");
+        var downloadLink = driver.FindElement(By.LinkText(fileName));
+        downloadLink.Click();
+
+        Thread.Sleep(1000);
+
+        Assert.That(dir.GetFiles().Any(f => f.Name == fileName), Is.True);
+    }
+
+    private DirectoryInfo PrepareFolder()
+    {
+        string dir = "Downloads";
+        DirectoryInfo directory = new DirectoryInfo(dir);
+
+        if (!directory.Exists)
+            directory.Create();
+
+        if (directory.GetFiles().Any())
+        {
+            foreach (var file in directory.GetFiles())
+            {
+                file.Delete();
+            }
+        }
+
+        return directory;
+    }
 }
