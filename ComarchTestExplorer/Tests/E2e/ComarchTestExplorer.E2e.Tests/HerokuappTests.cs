@@ -2,11 +2,13 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ComarchTestExplorer.E2e.Tests.Pages;
 
 namespace ComarchTestExplorer.E2e.Tests;
 
@@ -226,4 +228,16 @@ public class HerokuappTests
 
         return directory;
     }
+
+    [Test]
+    public void LoginPageTest()
+    {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.Open();
+        loginPage.LogIn("tomsmith", "SuperSecretPassword!");
+
+        var successAlert = driver.FindElement(By.Id("flash"));
+        Assert.That(successAlert.Text, Does.Contain("You logged into a secure area!"));
+    }
+
 }
