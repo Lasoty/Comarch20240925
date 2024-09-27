@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComarchTestExplorer.App", "ComarchTestExplorer.App\ComarchTestExplorer.App.csproj", "{6318A6C2-8FA8-4DC3-BBA2-8EB0BDD823F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComarchTestExplorer.App", "ComarchTestExplorer.App\ComarchTestExplorer.App.csproj", "{6318A6C2-8FA8-4DC3-BBA2-8EB0BDD823F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComarchTestExplorer.Services", "ComarchTestExplorer.Services\ComarchTestExplorer.Services.csproj", "{3E00FBDD-5985-4EF1-89D8-4B5A5D5F4C85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComarchTestExplorer.Services", "ComarchTestExplorer.Services\ComarchTestExplorer.Services.csproj", "{3E00FBDD-5985-4EF1-89D8-4B5A5D5F4C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComarchTestExplorer.Data", "ComarchTestExplorer.Data\ComarchTestExplorer.Data.csproj", "{2AF7D493-9D4E-4060-B4BF-C97C59C1C6A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComarchTestExplorer.Data", "ComarchTestExplorer.Data\ComarchTestExplorer.Data.csproj", "{2AF7D493-9D4E-4060-B4BF-C97C59C1C6A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{457A172C-AA1B-42B6-9D57-7BB873F3AF14}"
 EndProject
@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "Integra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "E2eTests", "E2eTests", "{01306ACE-9B97-4A07-BF8F-9185C3A78BB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComarchTestExplorer.Services.Tests", "Tests\UnitTests\ComarchTestExplorer.Services.Tests\ComarchTestExplorer.Services.Tests.csproj", "{4FB68E79-1E38-4400-A068-80A051FB22DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComarchTestExplorer.Services.Tests", "Tests\UnitTests\ComarchTestExplorer.Services.Tests\ComarchTestExplorer.Services.Tests.csproj", "{4FB68E79-1E38-4400-A068-80A051FB22DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComarchTestExplorer.E2e.Tests", "Tests\E2e\ComarchTestExplorer.E2e.Tests\ComarchTestExplorer.E2e.Tests.csproj", "{17848830-DED2-4EA2-97A6-8FDF9E9B3597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{4FB68E79-1E38-4400-A068-80A051FB22DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FB68E79-1E38-4400-A068-80A051FB22DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FB68E79-1E38-4400-A068-80A051FB22DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17848830-DED2-4EA2-97A6-8FDF9E9B3597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17848830-DED2-4EA2-97A6-8FDF9E9B3597}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17848830-DED2-4EA2-97A6-8FDF9E9B3597}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17848830-DED2-4EA2-97A6-8FDF9E9B3597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{4B4A24C5-E8C1-4BEF-A75E-1077250B1660} = {457A172C-AA1B-42B6-9D57-7BB873F3AF14}
 		{01306ACE-9B97-4A07-BF8F-9185C3A78BB5} = {457A172C-AA1B-42B6-9D57-7BB873F3AF14}
 		{4FB68E79-1E38-4400-A068-80A051FB22DA} = {6842A117-003B-4B72-963D-E7F76AA7239D}
+		{17848830-DED2-4EA2-97A6-8FDF9E9B3597} = {01306ACE-9B97-4A07-BF8F-9185C3A78BB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {591733FC-367A-4168-8A6C-8B3DC226AC3B}
