@@ -109,6 +109,24 @@ public class HerokuappTests
         Assert.That(resultText.Text, Does.Contain("You successfully clicked an alert"));
     }
 
+    [Test]
+    public void HandleJavaScriptAlertsWithInput()
+    {
+        const string inputText = "Test Selenium";
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/javascript_alerts");
+
+        var alertButton = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/ul/li[3]/button"));
+        alertButton.Click();
+
+        var alert = driver.SwitchTo().Alert();
+        alert.SendKeys(inputText);
+        alert.Accept();
+        
+        var resultText = driver.FindElement(By.Id("result"));
+        resultText = driver.FindElement(By.Id("result"));
+        Assert.That(resultText.Text, Does.Contain(inputText), "Komunikat po akceptacji prompta jest nieprawidłowy!");
+    }
+
 
 
 
