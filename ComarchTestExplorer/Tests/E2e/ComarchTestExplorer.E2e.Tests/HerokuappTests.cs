@@ -92,6 +92,24 @@ public class HerokuappTests
         Assert.That(selectElement.SelectedOption.Text, Is.EqualTo("Option 2"), "Incorrect dropdown value selected");
     }
 
+    [Test]
+    public void HandleJavaScriptAlerts()
+    {
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/javascript_alerts");
+
+        var alertButton = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/ul/li[1]/button"));
+        alertButton.Click();
+
+        var alert = driver.SwitchTo().Alert();
+
+        Assert.That(alert.Text, Does.Contain("I am a JS Alert"));
+        alert.Accept();
+
+        var resultText = driver.FindElement(By.Id("result"));
+        Assert.That(resultText.Text, Does.Contain("You successfully clicked an alert"));
+    }
+
+
 
 
 }
