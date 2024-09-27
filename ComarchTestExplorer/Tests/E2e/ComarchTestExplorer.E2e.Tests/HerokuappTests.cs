@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,5 +62,36 @@ public class HerokuappTests
         var errorMessage = driver.FindElement(By.Id("flash"));
         Assert.That(errorMessage.Text, Does.Contain("Your username is invalid!"), "Niepoprawne dane logowania nie wywołały błędu.");
     }
+
+    [Test]
+    public void CheckboxesTest()
+    {
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/checkboxes");
+        var checkbox = driver.FindElement(By.XPath("//*[@id=\"checkboxes\"]/input[2]"));
+        bool isChecked = checkbox.Selected;
+        Assert.That(isChecked, Is.True, "Checkbox is unchecked");
+    }
+
+    //[Test]
+    //public void RadioButtonsTest()
+    //{
+    //    driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/radio_buttons");
+    //    var radioButton = driver.FindElement(By.XPath("//*[@id=\"radio-buttons\"]/input[2]"));
+    //    radioButton.Click();
+    //    bool isChecked = radioButton.Selected;
+    //    Assert.That(isChecked, Is.True, "Radio button is not selected");
+    //}   
+
+    [Test]
+    public void DropdownTest()
+    {
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/dropdown");
+        var dropdown = driver.FindElement(By.Id("dropdown"));
+        var selectElement = new SelectElement(dropdown);
+        selectElement.SelectByValue("2");
+        Assert.That(selectElement.SelectedOption.Text, Is.EqualTo("Option 2"), "Incorrect dropdown value selected");
+    }
+
+
 
 }
